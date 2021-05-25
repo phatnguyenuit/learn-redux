@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { RootState } from '../rootReducer';
 import actionTypes from './actionTypes';
 import { TodoData } from './reducer';
 
@@ -28,3 +29,37 @@ export const requestTodos = () => (dispatch: Dispatch) => {
       dispatch(requestFail(error.message));
     });
 };
+
+// Async action creator
+// write in async/wait style
+export const requestTodosAsyncAwait = () => async (dispatch: Dispatch) => {
+  try {
+    dispatch(requestLoading());
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const result = await response.json();
+    dispatch(requestSuccess(result));
+  } catch (error) {
+    dispatch(requestFail(error.message));
+  }
+};
+
+// Async action creator
+// write in async/wait style
+// use root state
+export const requestTodosAsyncAwaitUseState =
+  () => async (dispatch: Dispatch, getState: () => RootState) => {
+    try {
+      const {
+        user: { token },
+      } = getState();
+      console.log(`got token form store`, token);
+      dispatch(requestLoading());
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/todos',
+      );
+      const result = await response.json();
+      dispatch(requestSuccess(result));
+    } catch (error) {
+      dispatch(requestFail(error.message));
+    }
+  };

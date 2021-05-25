@@ -7,7 +7,7 @@ const Todos: React.FC = () => {
   const {
     loading,
     errorMessage = '',
-    data = [],
+    data: todos = [],
   } = useSelector(selectTodosState);
 
   // map dispatch to action creator
@@ -18,7 +18,7 @@ const Todos: React.FC = () => {
       <p>Loading: {JSON.stringify(loading)}</p>
       <p>Error Message: {JSON.stringify(errorMessage)}</p>
       <ul>
-        {data.map((todo) => (
+        {todos.slice(0, 5).map((todo) => (
           <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
