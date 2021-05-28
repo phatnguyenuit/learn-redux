@@ -5,7 +5,21 @@ import store from './redux/store';
 import User from './containers/user';
 import Todos from './containers/todos';
 
+// const useIsLoggedIn = () => {
+//   const [logged, setLogged] = useState(false);
+//   useEffect(() => {
+//     const token = storageService.get('token');
+//     setLogged(!!token);
+//   }, []);
+//   return logged;
+// }
+
 function App() {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    console.log('submit');
+  };
+
   return (
     <Provider store={store}>
       <div className="App">
@@ -13,6 +27,11 @@ function App() {
         <CounterContainer />
         <User />
         <Todos />
+        <form onSubmit={handleSubmit}>
+          <input />
+          <input />
+          <button type="submit">submit</button>
+        </form>
       </div>
     </Provider>
   );
